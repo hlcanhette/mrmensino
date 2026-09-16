@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Mariana Rodrigues Meirelles Ensino - materiais didáticos visuais e editáveis para professores e alunos.">
+  <title>MRM Ensino - Aprender é entender o porquê.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --purple: #521B93;
+      --purple-soft: #BD9DDF;
+      --purple-mid: #9679D0;
+      --pink: #FFA5D9;
+      --cyan: #91DDEC;
+      --blue-soft: #7FB8DC;
+      --ink: #24162F;
+      --muted: #6D6474;
+      --bg: #F8F4FC;
+      --white: #FFFFFF;
+      --line: #E9E3EF;
+      --radius: 16px;
+      --shadow: 0 16px 40px rgba(82,27,147,.08);
+      --max: 1160px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.55;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    .container { width: min(var(--max), calc(100% - 40px)); margin: 0 auto; }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: #BD9DDF;
+      border-bottom: 1px solid rgba(82, 27, 147, 0.2);
+    }
+    .nav {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 10px 0;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 18px;
+      color: var(--purple);
+      flex: 0 0 auto;
+    }
+    .brand-logo {
+      width: 70px;
+      height: 44px;
+      display: block;
+      border-radius: 10px;
+      box-shadow: 0 7px 18px rgba(82,27,147,.14);
+      background: white;
+      object-fit: contain;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+      color: var(--purple);
+      font-size: 15px;
+      font-weight: 700;
+      flex-wrap: wrap;
+    }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-cta,
+    .materials-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--purple);
+      color: white;
+      padding: 11px 17px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 14px;
+      transition: .2s ease;
+      border: 0;
+      min-height: 44px;
+      text-align: center;
+    }
+    .nav-cta:hover,
+    .materials-btn:hover { background: #3d136f; }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 70px 0 60px;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 48px;
+    }
+    h1 {
+      font-size: clamp(36px, 4.5vw, 56px);
+      line-height: 1.08;
+      letter-spacing: -.03em;
+      margin: 20px 0;
+    }
+    h1 span { color: var(--purple); }
+    .hero-copy {
+      color: var(--muted);
+      font-size: 17px;
+      margin-bottom: 25px;
+    }
+
+    .product-slideshow {
+      position: relative;
+      overflow: hidden;
+      min-height: 360px;
+      aspect-ratio: 16 / 10;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: white;
+      box-shadow: var(--shadow);
+    }
+    .slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      display: grid;
+      place-items: center;
+      transition: opacity 900ms ease;
+      animation: slideFade 30s infinite;
+    }
+    .slide:nth-child(2) { animation-delay: 10s; }
+    .slide:nth-child(3) { animation-delay: 20s; }
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .slide-placeholder {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      place-items: center;
+      padding: 34px;
+      text-align: center;
+      color: var(--purple);
+      background:
+        linear-gradient(135deg, rgba(145,221,236,.52), rgba(255,165,217,.44)),
+        repeating-linear-gradient(45deg, rgba(82,27,147,.08) 0 12px, rgba(82,27,147,.03) 12px 24px);
+    }
+    .slide-placeholder strong {
+      display: block;
+      font-size: clamp(24px, 4vw, 40px);
+      line-height: 1.05;
+      margin-bottom: 10px;
+    }
+    .slide-placeholder span {
+      display: block;
+      max-width: 360px;
+      color: var(--ink);
+      font-weight: 600;
+    }
+    @keyframes slideFade {
+      0%, 29% { opacity: 1; }
+      33%, 96% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    section { padding: 70px 0; }
+    .section-head { max-width: 720px; margin-bottom: 42px; }
+    .section-kicker {
+      color: var(--purple);
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .09em;
+      margin-bottom: 8px;
+    }
+    h2 {
+      font-size: clamp(28px, 3.5vw, 42px);
+      line-height: 1.1;
+      letter-spacing: -.03em;
+      margin: 0 0 14px;
+    }
+    .section-head p { margin: 0; color: var(--muted); font-size: 16px; }
+    .section-actions { margin-top: 34px; }
+
+    .metodologia-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 32px;
+    }
+    .method-card {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 30px;
+      box-shadow: var(--shadow);
+    }
+    .method-card h3 {
+      color: var(--purple);
+      margin-top: 0;
+      font-size: 20px;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    .feature {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 28px;
+    }
+    .feature-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      margin-bottom: 20px;
+      background: #F4EEFA;
+      color: var(--purple);
+    }
+    .feature h3 { margin: 0 0 10px; font-size: 18px; }
+    .feature p { margin: 0; color: var(--muted); font-size: 14px; }
+
+    .alunos-section { background: #FFFFFF; }
+    .social-channels {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 50px;
+    }
+    .channel-card {
+      background: var(--bg);
+      border: 1px solid var(--line);
+      padding: 24px;
+      border-radius: var(--radius);
+      text-align: center;
+      transition: transform 0.2s;
+    }
+    .channel-card:hover { transform: translateY(-3px); }
+    .channel-card h4 { margin: 10px 0 6px; font-size: 18px; color: var(--purple); }
+    .channel-card p { font-size: 13px; color: var(--muted); margin: 0; }
+    .chart-box {
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 32px;
+    }
+    .bar-group { margin-bottom: 18px; }
+    .bar-info { display: flex; justify-content: space-between; gap: 16px; font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+    .bar-bg { background: #E4D9F0; height: 18px; border-radius: 9px; overflow: hidden; }
+    .bar-fill { background: var(--purple); height: 100%; border-radius: 9px; }
+
+    .cta {
+      padding: 60px 0;
+      background: var(--purple);
+      color: white;
+    }
+    .cta-box {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 30px;
+    }
+    .cta h2 { max-width: 600px; margin-bottom: 8px; color: white; }
+    .cta p { color: var(--purple-soft); margin: 0; }
+    .btn-light { background: white; color: var(--purple); font-weight: 700; padding: 12px 24px; border-radius: 10px; }
+    .btn-light:hover { background: var(--bg); }
+
+    .bio-final {
+      background: var(--bg);
+      padding: 54px 0;
+    }
+    .bio-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 34px;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      max-width: 760px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .bio-card h2 {
+      color: var(--purple);
+      font-size: clamp(26px, 3vw, 34px);
+    }
+    .bio-card p {
+      color: var(--muted);
+      margin: 0;
+    }
+
+    footer {
+      background: var(--ink);
+      color: #B8AEBF;
+      padding: 28px 0;
+      font-size: 13px;
+    }
+    .footer-inner { display: flex; justify-content: space-between; gap: 20px; align-items: center; }
+
+    @media (max-width: 1080px) {
+      .features { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 900px) {
+      .nav { flex-wrap: wrap; justify-content: center; }
+      .brand { width: 100%; justify-content: center; }
+      .hero-grid, .metodologia-grid, .social-channels, .features { grid-template-columns: 1fr; }
+      .cta-box { flex-direction: column; align-items: flex-start; }
+      .product-slideshow { min-height: 280px; }
+    }
+    @media (max-width: 560px) {
+      .container { width: min(var(--max), calc(100% - 28px)); }
+      .nav-links { gap: 14px; font-size: 14px; }
+      .nav-cta { width: 100%; }
+      section, .hero { padding: 52px 0; }
+      .method-card, .feature, .chart-box, .bio-card { padding: 22px; }
+      .bar-info { align-items: flex-start; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Para trocar a URL da loja externa, substitua os href="#materiais" dos links "Ver Materiais". -->
+  <header>
+    <div class="container nav">
+      <a href="#" class="brand" aria-label="MRM Ensino">
+        <svg class="brand-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-label="Logo MRM Ensino">
+          <defs>
+            <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#2D0A58" />
+              <stop offset="100%" stop-color="#6B118C" />
+            </linearGradient>
+          </defs>
+          <rect width="100%" height="100%" fill="#FFFFFF"/>
+          <g transform="translate(400, 210)" stroke="#A84FC1" stroke-width="2.5" fill="none" opacity="0.85">
+            <ellipse rx="130" ry="42" transform="rotate(-30)" />
+            <ellipse rx="130" ry="42" transform="rotate(30)" />
+          </g>
+          <text x="400" y="240" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="110" font-weight="800" fill="url(#purpleGrad)" text-anchor="middle" letter-spacing="12">MRM</text>
+          <text x="400" y="310" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="28" font-weight="500" fill="#6B118C" text-anchor="middle" letter-spacing="16">ENSINO</text>
+        </svg>
+        <span>MRM Ensino</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Navegação principal">
+        <a href="#professores">Para Professores</a>
+        <a href="#alunos">Para Alunos</a>
+        <a href="#quem-sou">Quem eu sou</a>
+      </nav>
+
+      <a href="#materiais" class="nav-cta">Ver Materiais</a>
+    </div>
+  </header>
+
+  <main>
+    <section id="quem-sou" class="hero">
+      <div class="container">
+        <div class="hero-grid">
+          <div>
+            <h1>Aprender é entender <span>o porquê.</span></h1>
+            <p class="hero-copy">
+              Olá! Sou Mariana Rodrigues Meirelles. Com ampla experiência no ensino de Ciências e Química, dedico minha trajetória a transformar conceitos complexos em explicações claras, visuais e acessíveis para estudantes e professores.
+            </p>
+          </div>
+          <div class="product-slideshow" aria-label="Slideshow de materiais didáticos">
+            <div class="slide">
+              <img src="Slide1.JPG" alt="Exemplo de material didático visual em slide">
+            </div>
+            <div class="slide">
+              <div class="slide-placeholder">
+                <div>
+                  <strong>Placeholder 2</strong>
+                  <span>Espaço reservado para imagem de produto.</span>
+                </div>
+              </div>
+            </div>
+            <div class="slide">
+              <div class="slide-placeholder">
+                <div>
+                  <strong>Placeholder 3</strong>
+                  <span>Espaço reservado para outro material do catálogo.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: 50px;">
+          <div class="metodologia-grid">
+            <div class="method-card">
+              <h3>O desafio</h3>
+              <p>Trabalhar questões do ENEM em sala de aula pode ser desgastante e consumir muito tempo, tanto na preparação quanto na condução da aula.</p>
+            </div>
+            <div class="method-card">
+              <h3>A solução</h3>
+              <p>Transforme a resolução de exercícios em aulas mais didáticas, criativas e dinâmicas, com materiais visuais que ajudam a conduzir o raciocínio passo a passo.</p>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: 50px;">
+          <div class="section-kicker">Nossa Abordagem</div>
+          <h2>Metodologia MRM</h2>
+          <div class="metodologia-grid">
+            <div class="method-card">
+              <h3>Resolução de Exercícios para o ENEM</h3>
+              <p>Acreditamos que a resolução ativa de questões é o pilar fundamental para a aprovação no ENEM. Em vez de decorar fórmulas isoladas, o estudante aprende a interpretar enunciados, identificar padrões recorrentes e construir o raciocínio lógico passo a passo.</p>
+            </div>
+            <div class="method-card">
+              <h3>Slides Visualmente Animados</h3>
+              <p>Utilizamos apresentações estruturadas com animações intencionais que guiam a atenção do aluno. Cada transição de slide é desenhada para facilitar a retenção e a compreensão visual dos fenômenos científicos e transformações químicas.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-actions">
+          <a href="#materiais" class="materials-btn">Ver Materiais</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="professores">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">Ferramentas Pedagógicas</div>
+          <h2>Para Professores</h2>
+          <p>Materiais didáticos desenvolvidos de professor para professor, focados em produtividade e excelência em sala de aula.</p>
+        </div>
+
+        <div class="features">
+          <article class="feature">
+            <div class="feature-icon">⏱️</div>
+            <h3>Economia de Tempo</h3>
+            <p>Reduza drasticamente as horas gastas preparando aulas do zero. Receba apresentações prontas, organizadas e 100% editáveis.</p>
+          </article>
+
+          <article class="feature">
+            <div class="feature-icon">🎬</div>
+            <h3>Slides Passo a Passo</h3>
+            <p>Apresentações em slides com animações fluidas que constroem a resolução da questão no ritmo exato da sua explicação.</p>
+          </article>
+
+          <article class="feature">
+            <div class="feature-icon">📚</div>
+            <h3>Base Teórica Completa</h3>
+            <p>Material complementar detalhado para cada exercício resolvido, garantindo fundamentação teórica sólida para suas explicações.</p>
+          </article>
+
+          <article class="feature">
+            <div class="feature-icon">PPT</div>
+            <h3>Como usar o material</h3>
+            <p>O material é um arquivo PPT com animações. Ele será baixado, pode ser editado, mas funciona corretamente apenas quando usado no Microsoft PowerPoint.</p>
+          </article>
+        </div>
+
+        <div class="section-actions">
+          <a href="#materiais" class="materials-btn">Ver Materiais</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="alunos" class="alunos-section">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">Espaço do Estudante</div>
+          <h2>Para Alunos</h2>
+          <p>Acompanhe nossas resoluções gratuitas, dicas diárias e análises de questões nas redes sociais.</p>
+        </div>
+
+        <div class="social-channels">
+          <a href="https://youtube.com" target="_blank" rel="noopener" class="channel-card">
+            <h4>YouTube</h4>
+            <p>Resoluções completas em vídeo com passo a passo detalhado.</p>
+          </a>
+          <a href="https://tiktok.com" target="_blank" rel="noopener" class="channel-card">
+            <h4>TikTok</h4>
+            <p>Pílulas de conhecimento, dicas rápidas e resoluções express.</p>
+          </a>
+          <a href="https://instagram.com" target="_blank" rel="noopener" class="channel-card">
+            <h4>Instagram</h4>
+            <p>Esquemas visuais, resumos e bastidores de preparação.</p>
+          </a>
+        </div>
+
+        <div class="chart-box">
+          <h3 style="margin-top:0; color:var(--purple); margin-bottom: 20px;">Temas Mais Recorrentes no ENEM (Química / Ciências)</h3>
+
+          <div class="bar-group">
+            <div class="bar-info"><span>Química Geral &amp; Físico-Química</span><span>35%</span></div>
+            <div class="bar-bg"><div class="bar-fill" style="width: 35%;"></div></div>
+          </div>
+
+          <div class="bar-group">
+            <div class="bar-info"><span>Química Orgânica</span><span>28%</span></div>
+            <div class="bar-bg"><div class="bar-fill" style="width: 28%;"></div></div>
+          </div>
+
+          <div class="bar-group">
+            <div class="bar-info"><span>Meio Ambiente &amp; Ecologia Aplicada</span><span>20%</span></div>
+            <div class="bar-bg"><div class="bar-fill" style="width: 20%;"></div></div>
+          </div>
+
+          <div class="bar-group">
+            <div class="bar-info"><span>Estequiometria &amp; Cálculos</span><span>17%</span></div>
+            <div class="bar-bg"><div class="bar-fill" style="width: 17%;"></div></div>
+          </div>
+        </div>
+
+        <div class="section-actions">
+          <a href="#materiais" class="materials-btn">Ver Materiais</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta" id="materiais">
+      <div class="container cta-box">
+        <div>
+          <h2>Pronto para transformar suas aulas e seus estudos?</h2>
+          <p>Acesse nossos pacotes de materiais didáticos e resoluções completas.</p>
+        </div>
+        <a href="#materiais" class="btn-light">Ver Materiais Didáticos</a>
+      </div>
+    </section>
+
+    <section class="bio-final" aria-labelledby="bio-final-title">
+      <div class="container">
+        <div class="bio-card">
+          <h2 id="bio-final-title">Mariana Rodrigues Meirelles</h2>
+          <p>Mariana, atualmente é professora de Química do ensino médio. Possui mestrado em Ciência de Materiais (UNIFESP),  bacharelado em Química (USP) e licenciatura em Química (IFSP). Apaixonada por metodologias de aprendizagem  didáticas e visuais, vêm desenvolvendo materiais práticos e criativos para o ensino de Química.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <div><strong>Mariana Rodrigues Meirelles Ensino</strong> · Aprender é entender o porquê.</div>
+      <div>© 2026 Mariana Rodrigues Meirelles Ensino</div>
+    </div>
+  </footer>
+</body>
+</html>
