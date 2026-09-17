@@ -143,10 +143,12 @@
       display: grid;
       place-items: center;
       transition: opacity 900ms ease;
-      animation: slideFade 30s infinite;
+      pointer-events: none;
     }
-    .slide:nth-child(2) { animation-delay: 10s; }
-    .slide:nth-child(3) { animation-delay: 20s; }
+    .slide.is-active {
+      opacity: 1;
+      pointer-events: auto;
+    }
     .slide img {
       width: 100%;
       height: 100%;
@@ -177,10 +179,33 @@
       color: var(--ink);
       font-weight: 600;
     }
-    @keyframes slideFade {
-      0%, 29% { opacity: 1; }
-      33%, 96% { opacity: 0; }
-      100% { opacity: 1; }
+    .slideshow-dots {
+      position: absolute;
+      left: 50%;
+      bottom: 16px;
+      z-index: 2;
+      display: flex;
+      gap: 9px;
+      transform: translateX(-50%);
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .82);
+      box-shadow: 0 8px 22px rgba(36, 22, 47, .12);
+    }
+    .slideshow-dot {
+      width: 11px;
+      height: 11px;
+      padding: 0;
+      border: 0;
+      border-radius: 50%;
+      background: rgba(82, 27, 147, .28);
+      cursor: pointer;
+      transition: background .2s ease, transform .2s ease;
+    }
+    .slideshow-dot:hover,
+    .slideshow-dot.is-active {
+      background: var(--purple);
+      transform: scale(1.12);
     }
 
     section { padding: 70px 0; }
@@ -197,7 +222,7 @@
       font-size: clamp(28px, 3.5vw, 42px);
       line-height: 1.1;
       letter-spacing: -.03em;
-      margin: 0 0 14px;
+      margin: 14px 0 14px;
     }
     .section-head p { margin: 0; color: var(--muted); font-size: 16px; }
     .section-actions { margin-top: 34px; }
@@ -260,10 +285,17 @@
       border-radius: var(--radius);
       text-align: center;
       transition: transform 0.2s;
+      min-height: 150px;
+      display: grid;
+      place-items: center;
     }
     .channel-card:hover { transform: translateY(-3px); }
-    .channel-card h4 { margin: 10px 0 6px; font-size: 18px; color: var(--purple); }
-    .channel-card p { font-size: 13px; color: var(--muted); margin: 0; }
+    .channel-card h4 { margin: 12px 0 0; font-size: 18px; color: var(--purple); }
+    .channel-logo {
+      width: 58px;
+      height: 58px;
+      display: block;
+    }
     .chart-box {
       background: var(--bg);
       border: 1px solid var(--line);
@@ -345,7 +377,7 @@
 </head>
 
 <body>
-  <!-- Para trocar a URL da loja externa, substitua os href="#materiais" dos links "Ver Materiais". -->
+  <!-- Para trocar a URL da loja externa, substitua os links que apontam para a Eduzz. -->
   <header>
     <div class="container nav">
       <a href="#" class="brand" aria-label="MRM Ensino">
@@ -370,15 +402,15 @@
       <nav class="nav-links" aria-label="Navegação principal">
         <a href="#professores">Para Professores</a>
         <a href="#alunos">Para Alunos</a>
-        <a href="#quem-sou">Quem eu sou</a>
+        <a href="#quem-eu-sou">Quem eu sou</a>
       </nav>
 
-      <a href="#materiais" class="nav-cta">Ver Materiais</a>
+      <a href="https://www.eduzz.com/" target="_blank" rel="noopener" class="nav-cta">Ver Materiais</a>
     </div>
   </header>
 
   <main>
-    <section id="quem-sou" class="hero">
+    <section id="inicio" class="hero">
       <div class="container">
         <div class="hero-grid">
           <div>
@@ -388,24 +420,37 @@
             </p>
           </div>
           <div class="product-slideshow" aria-label="Slideshow de materiais didáticos">
-            <div class="slide">
-              <img src="Slide1.JPG" alt="Exemplo de material didático visual em slide">
-            </div>
-            <div class="slide">
-              <div class="slide-placeholder">
+            <div class="slide is-active">
+              <img src="assets/slideshow/slide-1.jpg" alt="Exemplo de material didático visual em slide" onerror="this.style.display='none'; this.nextElementSibling.hidden=false;">
+              <div class="slide-placeholder" hidden>
                 <div>
-                  <strong>Placeholder 2</strong>
-                  <span>Espaço reservado para imagem de produto.</span>
+                  <strong>Imagem 1</strong>
+                  <span>Adicione o arquivo em assets/slideshow/slide-1.jpg.</span>
                 </div>
               </div>
             </div>
             <div class="slide">
-              <div class="slide-placeholder">
+              <img src="assets/slideshow/slide-2.jpg" alt="Outro exemplo de material didático visual em slide" onerror="this.style.display='none'; this.nextElementSibling.hidden=false;">
+              <div class="slide-placeholder" hidden>
                 <div>
-                  <strong>Placeholder 3</strong>
-                  <span>Espaço reservado para outro material do catálogo.</span>
+                  <strong>Imagem 2</strong>
+                  <span>Adicione o arquivo em assets/slideshow/slide-2.jpg.</span>
                 </div>
               </div>
+            </div>
+            <div class="slide">
+              <img src="assets/slideshow/slide-3.jpg" alt="Material do catálogo apresentado em slide" onerror="this.style.display='none'; this.nextElementSibling.hidden=false;">
+              <div class="slide-placeholder" hidden>
+                <div>
+                  <strong>Imagem 3</strong>
+                  <span>Adicione o arquivo em assets/slideshow/slide-3.jpg.</span>
+                </div>
+              </div>
+            </div>
+            <div class="slideshow-dots" aria-label="Escolher imagem do slideshow">
+              <button type="button" class="slideshow-dot is-active" aria-label="Mostrar imagem 1" aria-current="true"></button>
+              <button type="button" class="slideshow-dot" aria-label="Mostrar imagem 2"></button>
+              <button type="button" class="slideshow-dot" aria-label="Mostrar imagem 3"></button>
             </div>
           </div>
         </div>
@@ -439,15 +484,17 @@
         </div>
 
         <div class="section-actions">
-          <a href="#materiais" class="materials-btn">Ver Materiais</a>
+          <a href="https://www.eduzz.com/" target="_blank" rel="noopener" class="materials-btn">Ver Materiais</a>
         </div>
       </div>
     </section>
 
     <section id="professores">
       <div class="container">
-        <div class="section-head">
+          <div class="section-head">
+              <!--
           <div class="section-kicker">Ferramentas Pedagógicas</div>
+                  -->
           <h2>Para Professores</h2>
           <p>Materiais didáticos desenvolvidos de professor para professor, focados em produtividade e excelência em sala de aula.</p>
         </div>
@@ -479,7 +526,7 @@
         </div>
 
         <div class="section-actions">
-          <a href="#materiais" class="materials-btn">Ver Materiais</a>
+          <a href="https://www.eduzz.com/" target="_blank" rel="noopener" class="materials-btn">Ver Materiais</a>
         </div>
       </div>
     </section>
@@ -487,57 +534,76 @@
     <section id="alunos" class="alunos-section">
         <div class="container">
             <div class="section-head">
-                <div class="section-kicker">Espaço do Estudante</div>
-                <h2>Para Alunos</h2>
-                <p>Acompanhe e conheça nosso material através de resoluções gratuitas disponíveis em nossas redes sociais. Comente, interaja e tire suas dúvidas!</p>
-            </div>
+                <!--
+          <div class="section-kicker">Espaço do Estudante</div>
+                    -->
+          <h2>Para Alunos</h2>
+          <p>Acompanhe e conheça nosso material através de resoluções gratuitas disponíveis em nossas redes sociais. Comente, interaja e tire suas dúvidas!</p>
+      </div>
 
-            <div class="social-channels">
-                <a href="https://www.youtube.com/@mmensino" target="_blank" rel="noopener" class="channel-card">
-                    <h4>YouTube</h4>
-                    <p>Resoluções completas em vídeo com passo a passo detalhado.</p>
-                </a>
-                <a href="https://www.tiktok.com/@solucionado1?_r=1&_t=ZS-99oGOehO7Wy" target="_blank" rel="noopener" class="channel-card">
-                    <h4>TikTok</h4>
-                    <p>Pílulas de conhecimento, dicas rápidas e resoluções express.</p>
-                </a>
-                <a href="https://www.instagram.com/mmensino?stkn=bHEzaDM0Zmk4cHh4" target="_blank" rel="noopener" class="channel-card">
-                    <h4>Instagram</h4>
-                    <p>Esquemas visuais, resumos e bastidores de preparação.</p>
-                </a>
-            </div>
+      <div class="social-channels">
+          <a href="https://www.youtube.com/@mmensino" target="_blank" rel="noopener" class="channel-card">
+              <svg class="channel-logo" viewBox="0 0 64 64" role="img" aria-label="Logo do YouTube">
+                <rect x="6" y="14" width="52" height="36" rx="11" fill="#FF0000"/>
+                <path d="M28 24.5v15l13-7.5-13-7.5z" fill="#FFFFFF"/>
+              </svg>
+              <h4>YouTube</h4>
+          </a>
+          <a href="https://www.tiktok.com/@solucionado1?_r=1&_t=ZS-99oGOehO7Wy" target="_blank" rel="noopener" class="channel-card">
+              <svg class="channel-logo" viewBox="0 0 64 64" role="img" aria-label="Logo do TikTok">
+                <path d="M38 8c1.2 8.2 5.8 13.2 14 14.1v9.2c-4.8.1-9.3-1.3-13.4-4.1v16.3c0 8.2-6.1 13.9-14.4 13.9-8 0-14.2-5.6-14.2-13.2 0-8 6.1-13.7 15-13.7 1.1 0 2.2.1 3.2.3v9.4c-.9-.3-1.8-.5-2.9-.5-3.4 0-5.7 1.9-5.7 4.6 0 2.6 2.1 4.5 5 4.5 3.2 0 5.1-2.1 5.1-5.8V8h8.3z" fill="#111111"/>
+                <path d="M41.1 15.8c2.5 3.2 5.9 5.2 10.9 5.8v5.1c-5.7-.4-10.2-2.5-13.4-6.3v-4.6h2.5z" fill="#25F4EE"/>
+                <path d="M27.9 37.5v5.4c0 3.7-1.9 5.8-5.1 5.8-1.8 0-3.2-.7-4.1-1.8.8 2.5 3 4.2 6 4.2 3.2 0 5.1-2.1 5.1-5.8V10.4H38V8h-8.3v29.8c-.6-.2-1.2-.3-1.8-.3z" fill="#FE2C55"/>
+              </svg>
+              <h4>TikTok</h4>
+          </a>
+          <a href="https://www.instagram.com/mmensino?stkn=bHEzaDM0Zmk4cHh4" target="_blank" rel="noopener" class="channel-card">
+              <svg class="channel-logo" viewBox="0 0 64 64" role="img" aria-label="Logo do Instagram">
+                <defs>
+                  <radialGradient id="instagramGrad" cx="30%" cy="107%" r="120%">
+                    <stop offset="0%" stop-color="#FEDA75"/>
+                    <stop offset="28%" stop-color="#FA7E1E"/>
+                    <stop offset="50%" stop-color="#D62976"/>
+                    <stop offset="72%" stop-color="#962FBF"/>
+                    <stop offset="100%" stop-color="#4F5BD5"/>
+                  </radialGradient>
+                </defs>
+                <rect x="9" y="9" width="46" height="46" rx="14" fill="url(#instagramGrad)"/>
+                <circle cx="32" cy="32" r="11" fill="none" stroke="#FFFFFF" stroke-width="4"/>
+                <circle cx="45" cy="19" r="3.5" fill="#FFFFFF"/>
+              </svg>
+              <h4>Instagram</h4>
+          </a>
+      </div>
 
-            <!--
-            <div class="chart-box">
-              <h3 style="margin-top:0; color:var(--purple); margin-bottom: 20px;">Temas Mais Recorrentes no ENEM (Química / Ciências)</h3>
+      <!--
+      <div class="chart-box">
+        <h3 style="margin-top:0; color:var(--purple); margin-bottom: 20px;">Temas Mais Recorrentes no ENEM (Química / Ciências)</h3>
 
-              <div class="bar-group">
-                <div class="bar-info"><span>Química Geral &amp; Físico-Química</span><span>35%</span></div>
-                <div class="bar-bg"><div class="bar-fill" style="width: 35%;"></div></div>
-              </div>
+        <div class="bar-group">
+          <div class="bar-info"><span>Química Geral &amp; Físico-Química</span><span>35%</span></div>
+          <div class="bar-bg"><div class="bar-fill" style="width: 35%;"></div></div>
+        </div>
 
-              <div class="bar-group">
-                <div class="bar-info"><span>Química Orgânica</span><span>28%</span></div>
-                <div class="bar-bg"><div class="bar-fill" style="width: 28%;"></div></div>
-              </div>
+        <div class="bar-group">
+          <div class="bar-info"><span>Química Orgânica</span><span>28%</span></div>
+          <div class="bar-bg"><div class="bar-fill" style="width: 28%;"></div></div>
+        </div>
 
-              <div class="bar-group">
-                <div class="bar-info"><span>Meio Ambiente &amp; Ecologia Aplicada</span><span>20%</span></div>
-                <div class="bar-bg"><div class="bar-fill" style="width: 20%;"></div></div>
-              </div>
+        <div class="bar-group">
+          <div class="bar-info"><span>Meio Ambiente &amp; Ecologia Aplicada</span><span>20%</span></div>
+          <div class="bar-bg"><div class="bar-fill" style="width: 20%;"></div></div>
+        </div>
 
-              <div class="bar-group">
-                <div class="bar-info"><span>Estequiometria &amp; Cálculos</span><span>17%</span></div>
-                <div class="bar-bg"><div class="bar-fill" style="width: 17%;"></div></div>
-              </div>
-            </div>
+        <div class="bar-group">
+          <div class="bar-info"><span>Estequiometria &amp; Cálculos</span><span>17%</span></div>
+          <div class="bar-bg"><div class="bar-fill" style="width: 17%;"></div></div>
+        </div>
+      </div>
 
-            <div class="section-actions">
-              <a href="#materiais" class="materials-btn">Ver Materiais</a>
-            </div>
-          </div>
-                -->
-        </section>
+    </div>
+          -->
+</section>
 
         <section class="cta" id="materiais">
           <div class="container cta-box">
@@ -545,11 +611,11 @@
               <h2>Pronto para transformar suas aulas?</h2>
               <p>Acesse nossos pacotes de materiais didáticos e resoluções completas.</p>
             </div>
-            <a href="#materiais" class="btn-light">Ver Materiais Didáticos</a>
+            <a href="https://www.eduzz.com/" target="_blank" rel="noopener" class="btn-light">Ver Materiais Didáticos</a>
           </div>
         </section>
 
-        <section class="bio-final" aria-labelledby="bio-final-title">
+        <section class="bio-final" id="quem-eu-sou" aria-labelledby="bio-final-title">
           <div class="container">
             <div class="bio-card">
               <h2 id="bio-final-title">Mariana Rodrigues Meirelles</h2>
@@ -565,5 +631,45 @@
           <div>© 2026 Mariana Rodrigues Meirelles Ensino</div>
         </div>
       </footer>
+      <script>
+        const slideshow = document.querySelector('.product-slideshow');
+
+        if (slideshow) {
+          const slides = Array.from(slideshow.querySelectorAll('.slide'));
+          const dots = Array.from(slideshow.querySelectorAll('.slideshow-dot'));
+          let currentSlide = 0;
+          let slideTimer;
+
+          const showSlide = (index) => {
+            currentSlide = index;
+
+            slides.forEach((slide, slideIndex) => {
+              slide.classList.toggle('is-active', slideIndex === index);
+            });
+
+            dots.forEach((dot, dotIndex) => {
+              const isActive = dotIndex === index;
+              dot.classList.toggle('is-active', isActive);
+              dot.setAttribute('aria-current', isActive ? 'true' : 'false');
+            });
+          };
+
+          const startTimer = () => {
+            window.clearInterval(slideTimer);
+            slideTimer = window.setInterval(() => {
+              showSlide((currentSlide + 1) % slides.length);
+            }, 7000);
+          };
+
+          dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+              showSlide(index);
+              startTimer();
+            });
+          });
+
+          startTimer();
+        }
+      </script>
     </body>
     </html>
