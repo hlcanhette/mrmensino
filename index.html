@@ -637,7 +637,7 @@
             if (slides.length < 2 || selectedByUser || reducedMotion.matches || document.hidden || slideshow.matches(':hover') || slideshow.contains(document.activeElement)) return;
             slideTimer = window.setInterval(() => {
               showSlide((currentSlide + 1) % slides.length);
-            }, 7000);
+            }, 3000);
           };
 
           dots.forEach((dot, index) => {
