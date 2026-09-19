@@ -129,30 +129,21 @@
     .product-slideshow {
       position: relative;
       overflow: hidden;
-      min-height: 360px;
-      aspect-ratio: 16 / 10;
+      min-width: 0;
       border-radius: var(--radius);
       border: 1px solid var(--line);
       background: white;
       box-shadow: var(--shadow);
     }
     .slide {
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      display: grid;
-      place-items: center;
-      transition: opacity 900ms ease;
-      pointer-events: none;
+      display: none;
     }
     .slide.is-active {
-      opacity: 1;
-      pointer-events: auto;
+      display: block;
     }
     .slide img {
       width: 100%;
-      height: 100%;
-      object-fit: cover;
+      height: auto;
       display: block;
     }
     .slide-placeholder {
@@ -180,30 +171,37 @@
       font-weight: 600;
     }
     .slideshow-dots {
-      position: absolute;
-      left: 50%;
-      bottom: 16px;
-      z-index: 2;
       display: flex;
-      gap: 9px;
-      transform: translateX(-50%);
-      padding: 8px 10px;
-      border-radius: 999px;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 2px 10px;
       background: rgba(255, 255, 255, .82);
-      box-shadow: 0 8px 22px rgba(36, 22, 47, .12);
+    }
+    .product-slideshow[hidden], .slideshow-dots[hidden] {
+      display: none;
     }
     .slideshow-dot {
-      width: 11px;
-      height: 11px;
+      width: 44px;
+      height: 44px;
       padding: 0;
       border: 0;
       border-radius: 50%;
-      background: rgba(82, 27, 147, .28);
+      background: transparent;
       cursor: pointer;
       transition: background .2s ease, transform .2s ease;
     }
-    .slideshow-dot:hover,
-    .slideshow-dot.is-active {
+    .slideshow-dot::before {
+      content: '';
+      display: block;
+      width: 11px;
+      height: 11px;
+      margin: auto;
+      border-radius: 50%;
+      background: rgba(82, 27, 147, .28);
+    }
+    .slideshow-dot:focus-visible { outline: 2px solid var(--purple); outline-offset: -4px; }
+    .slideshow-dot:hover::before,
+    .slideshow-dot.is-active::before {
       background: var(--purple);
       transform: scale(1.12);
     }
@@ -362,7 +360,6 @@
       .brand { width: 100%; justify-content: center; }
       .hero-grid, .metodologia-grid, .social-channels, .features { grid-template-columns: 1fr; }
       .cta-box { flex-direction: column; align-items: flex-start; }
-      .product-slideshow { min-height: 280px; }
     }
     @media (max-width: 560px) {
       .container { width: min(var(--max), calc(100% - 28px)); }
@@ -405,40 +402,7 @@
                 Materiais didáticos para o ENEM, editáveis e prontos para usar — criados para transformar questões complexas em explicações que fazem sentido.
             </p>
           </div>
-          <div class="product-slideshow" aria-label="Slideshow de materiais didáticos">
-            <div class="slide is-active">
-              <img src="assets/slideshow/slide-1.jpg" alt="Exemplo de material didático visual em slide" onerror="this.style.display='none'; this.nextElementSibling.hidden=false;">
-              <div class="slide-placeholder" hidden>
-                <div>
-                  <strong>Imagem 1</strong>
-                  <span>Adicione o arquivo em assets/slideshow/slide-1.jpg.</span>
-                </div>
-              </div>
-            </div>
-            <div class="slide">
-              <img src="assets/slideshow/slide-2.jpg" alt="Outro exemplo de material didático visual em slide" onerror="this.style.display='none'; this.nextElementSibling.hidden=false;">
-              <div class="slide-placeholder" hidden>
-                <div>
-                  <strong>Imagem 2</strong>
-                  <span>Adicione o arquivo em assets/slideshow/slide-2.jpg.</span>
-                </div>
-              </div>
-            </div>
-            <div class="slide">
-              <img src="assets/slideshow/slide-3.jpg" alt="Material do catálogo apresentado em slide" onerror="this.style.display='none'; this.nextElementSibling.hidden=false;">
-              <div class="slide-placeholder" hidden>
-                <div>
-                  <strong>Imagem 3</strong>
-                  <span>Adicione o arquivo em assets/slideshow/slide-3.jpg.</span>
-                </div>
-              </div>
-            </div>
-            <div class="slideshow-dots" aria-label="Escolher imagem do slideshow">
-              <button type="button" class="slideshow-dot is-active" aria-label="Mostrar imagem 1" aria-current="true"></button>
-              <button type="button" class="slideshow-dot" aria-label="Mostrar imagem 2"></button>
-              <button type="button" class="slideshow-dot" aria-label="Mostrar imagem 3"></button>
-            </div>
-          </div>
+          <div class="product-slideshow" aria-label="Slideshow de materiais didáticos" hidden></div>
         </div>
 
         <div style="margin-top: 50px;">
@@ -617,20 +581,48 @@
           <div>© 2026 Mariana Rodrigues Meirelles Ensino</div>
         </div>
       </footer>
+      <script src="assets/slideshow-images.js"></script>
       <script>
         const slideshow = document.querySelector('.product-slideshow');
 
         if (slideshow) {
-          const slides = Array.from(slideshow.querySelectorAll('.slide'));
-          const dots = Array.from(slideshow.querySelectorAll('.slideshow-dot'));
+          const slides = [];
+          const dots = [];
+          const navigation = document.createElement('div');
+          navigation.className = 'slideshow-dots';
+          navigation.setAttribute('aria-label', 'Escolher imagem do slideshow');
+          const files = Array.isArray(window.slideshowImages) ? window.slideshowImages : [];
+          files.forEach((source, index) => {
+            const slide = document.createElement('div');
+            slide.className = 'slide';
+            const image = document.createElement('img');
+            image.alt = `Exemplo de material didático visual em slide ${index + 1}`;
+            if (index === 0) image.fetchPriority = 'high';
+            image.src = source;
+            slide.append(image);
+            slideshow.append(slide);
+            slides.push(slide);
+            const dot = document.createElement('button');
+            dot.type = 'button';
+            dot.className = 'slideshow-dot';
+            dot.setAttribute('aria-label', `Mostrar imagem ${index + 1}`);
+            navigation.append(dot);
+            dots.push(dot);
+          });
+          slideshow.append(navigation);
+          slideshow.hidden = slides.length === 0;
+          navigation.hidden = slides.length < 2;
           let currentSlide = 0;
           let slideTimer;
+          let selectedByUser = false;
+          const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
           const showSlide = (index) => {
             currentSlide = index;
 
             slides.forEach((slide, slideIndex) => {
               slide.classList.toggle('is-active', slideIndex === index);
+              slide.setAttribute('aria-hidden', slideIndex === index ? 'false' : 'true');
             });
 
             dots.forEach((dot, dotIndex) => {
@@ -642,6 +634,7 @@
 
           const startTimer = () => {
             window.clearInterval(slideTimer);
+            if (slides.length < 2 || selectedByUser || reducedMotion.matches || document.hidden || slideshow.matches(':hover') || slideshow.contains(document.activeElement)) return;
             slideTimer = window.setInterval(() => {
               showSlide((currentSlide + 1) % slides.length);
             }, 7000);
@@ -649,11 +642,26 @@
 
           dots.forEach((dot, index) => {
             dot.addEventListener('click', () => {
+              selectedByUser = true;
               showSlide(index);
               startTimer();
             });
+            dot.addEventListener('keydown', (event) => {
+              if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+              event.preventDefault();
+              const next = event.key === 'Home' ? 0 : event.key === 'End' ? dots.length - 1 : (index + (event.key === 'ArrowRight' ? 1 : -1) + dots.length) % dots.length;
+              dots[next].focus();
+              dots[next].click();
+            });
           });
 
+          slideshow.addEventListener('mouseenter', () => window.clearInterval(slideTimer));
+          slideshow.addEventListener('mouseleave', startTimer);
+          slideshow.addEventListener('focusin', () => window.clearInterval(slideTimer));
+          slideshow.addEventListener('focusout', () => window.setTimeout(startTimer, 0));
+          document.addEventListener('visibilitychange', startTimer);
+          reducedMotion.addEventListener('change', startTimer);
+          showSlide(0);
           startTimer();
         }
       </script>
