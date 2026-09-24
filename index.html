@@ -105,7 +105,7 @@
     .hero {
       position: relative;
       overflow: hidden;
-      padding: 70px 0 60px;
+      padding: 24px 0 60px;
     }
     .hero-grid {
       display: grid;
@@ -125,6 +125,65 @@
       font-size: 17px;
       margin-bottom: 25px;
     }
+    .product-offer { min-width: 0; }
+    .product-title {
+      font-size: 40px;
+      line-height: 1.2;
+      letter-spacing: 0;
+      margin: 0 0 36px;
+      text-wrap: balance;
+    }
+    .product-offer h2 {
+      font-size: 24px;
+      line-height: 1.15;
+      letter-spacing: 0;
+      margin: 0 0 20px;
+      text-wrap: balance;
+    }
+    .product-offer h2 span { color: var(--purple); }
+    .product-offer .hero-copy { margin: 0 0 24px; }
+    .product-offer .hero-copy, .product-benefits {
+      font-family: inherit;
+      font-size: 17px;
+      font-weight: 400;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+    .product-benefits {
+      padding-left: 22px;
+      margin: 0 0 28px;
+      display: grid;
+      gap: 6px;
+    }
+    .product-benefits li { padding-left: 4px; }
+    .product-benefits li::marker { color: var(--muted); }
+    .product-benefits a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+    .purchase-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-weight: 700;
+      flex-shrink: 0;
+      min-height: 56px;
+      min-width: 240px;
+      padding: 16px 32px;
+      font-size: 18px;
+      border-radius: 8px;
+      box-shadow: 0 8px 20px rgba(82,27,147,.22);
+    }
+    .purchase-btn:hover { box-shadow: 0 10px 24px rgba(82,27,147,.3); }
+    .purchase-btn:focus-visible { outline: 3px solid var(--purple); outline-offset: 4px; }
+    .brand-message {
+      margin-top: 56px;
+      padding: 40px 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      text-align: center;
+    }
+    .brand-message h2 { margin: 0 0 16px; font-size: 38px; letter-spacing: 0; }
+    .brand-message h2 span { color: var(--purple); }
+    .brand-message .hero-copy { margin: 0; }
 
     .product-slideshow {
       position: relative;
@@ -318,8 +377,9 @@
     }
     .cta h2 { max-width: 600px; margin-bottom: 8px; color: white; }
     .cta p { color: var(--purple-soft); margin: 0; }
-    .btn-light { background: white; color: var(--purple); font-weight: 700; padding: 12px 24px; border-radius: 10px; }
+    .btn-light { background: white; color: var(--purple); }
     .btn-light:hover { background: var(--bg); }
+    .btn-light:focus-visible { outline-color: white; }
 
     .bio-final {
       background: var(--bg);
@@ -362,10 +422,16 @@
       .cta-box { flex-direction: column; align-items: flex-start; }
     }
     @media (max-width: 560px) {
+      .product-title { font-size: 30px; margin-bottom: 28px; }
+      .product-offer h2 { font-size: 22px; }
+      .purchase-btn { width: 100%; min-width: 0; }
+      .brand-message { margin-top: 36px; padding: 30px 0; }
+      .brand-message h2 { font-size: 28px; }
       .container { width: min(var(--max), calc(100% - 28px)); }
       .nav-links { gap: 14px; font-size: 14px; }
       .nav-cta { width: 100%; }
       section, .hero { padding: 52px 0; }
+      .hero { padding-top: 20px; }
       .method-card, .feature, .chart-box, .bio-card { padding: 22px; }
       .bar-info { align-items: flex-start; }
       .footer-inner { flex-direction: column; align-items: flex-start; }
@@ -388,21 +454,36 @@
         <a href="#quem-eu-sou">Quem eu sou</a>
       </nav>
 
-      <a href="https://chk.eduzz.com/39YNNA14WO" target="_blank" rel="noopener" class="nav-cta">Ver Materiais</a>
+      <a href="https://chk.eduzz.com/39YNNA14WO" target="_blank" rel="noopener" class="nav-cta purchase-btn">Ver Materiais</a>
     </div>
   </header>
 
   <main>
     <section id="inicio" class="hero">
       <div class="container">
+          <h1 class="product-title">Resoluções das <span>questões de Química</span> ENEM 2025</h1>
         <div class="hero-grid">
-          <div>
-            <h1>Aprender é entender <span>o porquê.</span></h1>
+          <div class="product-offer">
+            <h2>Invista seu tempo onde <span>realmente importa.</span></h2>
             <p class="hero-copy">
-                Materiais didáticos para o ENEM, editáveis e prontos para usar — criados para transformar questões complexas em explicações que fazem sentido.
+              Adquira já o material MRM Ensino com as resoluções das questões de química do ENEM 2025 com animações prontas para uso.
             </p>
+            <ul class="product-benefits">
+              <li>Material pronto para uso.</li>
+              <li>16 questões em mais de 100 slides animados.</li>
+              <li>Saiba exatamente o que está comprando, acesse <a href="#alunos">nossas redes sociais</a> e conheça nosso material.</li>
+              <li>Material editável, ideal para personalizar com a identidade visual da sua escola.</li>
+            </ul>
+            <a href="https://chk.eduzz.com/39YNNA14WO" target="_blank" rel="noopener" class="materials-btn purchase-btn">Comprar Agora</a>
           </div>
           <div class="product-slideshow" aria-label="Slideshow de materiais didáticos" hidden></div>
+        </div>
+
+        <div class="brand-message">
+          <h2>Aprender é entender <span>o porquê.</span></h2>
+          <p class="hero-copy">
+            Materiais didáticos para o ENEM, editáveis e prontos para usar — criados para transformar questões complexas em explicações que fazem sentido.
+          </p>
         </div>
 
         <div style="margin-top: 50px;">
@@ -434,7 +515,7 @@
         </div>
 
         <div class="section-actions">
-          <a href="https://chk.eduzz.com/39YNNA14WO" target="_blank" rel="noopener" class="materials-btn">Ver Materiais</a>
+          <a href="https://chk.eduzz.com/39YNNA14WO" target="_blank" rel="noopener" class="materials-btn purchase-btn">Compre Agora</a>
         </div>
       </div>
     </section>
@@ -476,7 +557,7 @@
         </div>
 
         <div class="section-actions">
-          <a href="https://chk.eduzz.com/39YNNA14WO" target="_blank" rel="noopener" class="materials-btn">Ver Materiais</a>
+          <a href="https://chk.eduzz.com/39YNNA14WO" target="_blank" rel="noopener" class="materials-btn purchase-btn">Compre Agora</a>
         </div>
       </div>
     </section>
@@ -561,7 +642,7 @@
               <h2>Pronto para transformar suas aulas?</h2>
               <p>Acesse nossos pacotes de materiais didáticos e resoluções completas.</p>
             </div>
-            <a href="https://chk.eduzz.com/39YNNA14WO" target="_blank" rel="noopener" class="btn-light">Ver Materiais Didáticos</a>
+            <a href="https://chk.eduzz.com/39YNNA14WO" target="_blank" rel="noopener" class="btn-light purchase-btn">Ver Materiais Didáticos</a>
           </div>
         </section>
 
