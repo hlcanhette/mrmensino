@@ -2,6 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Mariana Rodrigues Meirelles Ensino - materiais didáticos visuais e editáveis para professores e alunos.">
   <title>MRM Ensino - Aprender é entender o porquê.</title>
@@ -184,6 +185,7 @@
     .brand-message h2 span { color: var(--purple); }
     .brand-message .hero-copy { margin: 0; }
 
+    /* Slideshow pausado temporariamente para uso do vídeo do YouTube.
     .product-slideshow {
       position: relative;
       overflow: hidden;
@@ -262,6 +264,24 @@
     .slideshow-dot.is-active::before {
       background: var(--purple);
       transform: scale(1.12);
+    }
+    */
+
+    .product-video {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: var(--ink);
+      box-shadow: var(--shadow);
+    }
+    .product-video iframe {
+      width: 100%;
+      height: 100%;
+      display: block;
+      border: 0;
     }
 
     section { padding: 70px 0; }
@@ -475,7 +495,17 @@
             </ul>
             <a href="https://chk.eduzz.com/39YNNA14WO" target="_blank" rel="noopener" class="materials-btn purchase-btn">Comprar Agora</a>
           </div>
-          <div class="product-slideshow" aria-label="Slideshow de materiais didáticos" hidden></div>
+          <!-- Slideshow pausado temporariamente. Para reativá-lo, remova este comentário,
+               restaure o carregamento do script e comente o bloco do vídeo. -->
+          <!-- <div class="product-slideshow" aria-label="Slideshow de materiais didáticos" hidden></div> -->
+          <div class="product-video">
+            <iframe
+              src="https://www.youtube.com/embed/FC1EX72lWuI?rel=0&origin=https%3A%2F%2Fmrmensino.com.br"
+              title="Resoluções das questões de Química ENEM 2025"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen></iframe>
+          </div>
         </div>
 
         <div class="brand-message">
@@ -661,6 +691,7 @@
           <div>© 2026 Mariana Rodrigues Meirelles Ensino</div>
         </div>
       </footer>
+      <!-- Slideshow pausado temporariamente para manter o código disponível para futura reativação.
       <script src="assets/slideshow-images.js"></script>
       <script>
         const slideshow = document.querySelector('.product-slideshow');
@@ -745,5 +776,6 @@
           startTimer();
         }
       </script>
+      -->
     </body>
     </html>
