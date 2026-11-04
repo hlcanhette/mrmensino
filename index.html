@@ -700,6 +700,49 @@
                 align-items: flex-start;
             }
         }
+
+        /* Mobile: preserve all content and its original reading order. */
+        a:focus-visible { outline: 3px solid var(--purple); outline-offset: 4px; }
+        @media (max-width: 900px) {
+            header { position: relative; }
+            .nav { gap: 12px; padding: 12px 0; }
+            .brand-logo { width: 60px; height: 48px; }
+            .nav-links { width: 100%; gap: 4px 12px; }
+            .nav-links a { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 8px 4px; }
+            .nav-cta { width: 100%; min-width: 0; }
+            .hero-grid { gap: 28px; }
+            .metodologia-grid, .features { gap: 18px; }
+            .social-channels { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+            .channel-card { min-width: 0; padding: 16px 8px; }
+            .channel-card h4 { font-size: 16px; }
+            .cta-box { align-items: stretch; }
+            .cta-box .purchase-btn { width: 100%; min-width: 0; }
+        }
+        @media (min-width: 561px) and (max-width: 900px) {
+            .metodologia-grid, .features { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
+        @media (max-width: 560px) {
+            .product-title { font-size: clamp(28px, 7.5vw, 30px); line-height: 1.2; }
+            section, .hero { padding: 36px 0; }
+            .hero { padding-top: 24px; }
+            .section-head { margin-bottom: 28px; }
+            .method-card, .feature, .bio-card { padding: 20px; min-width: 0; }
+            .feature p { font-size: 16px; }
+            .product-benefits { padding-left: 20px; }
+            .channel-logo { width: 44px; height: 44px; }
+            .channel-card { min-height: 120px; }
+            .social-channels { margin-bottom: 28px; }
+            .footer-inner { gap: 12px; }
+        }
+        @media (max-width: 359px) {
+            .social-channels { grid-template-columns: 1fr; }
+            .channel-card { min-height: 80px; grid-template-columns: 44px 1fr; gap: 16px; padding: 16px; }
+            .channel-card h4 { margin: 0; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            .nav-cta, .materials-btn, .channel-card { transition: none; }
+        }
     </style>
 </head>
 
